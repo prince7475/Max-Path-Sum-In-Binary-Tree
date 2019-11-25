@@ -1,0 +1,57 @@
+Write a function that takes in a Binary Tree and returns its max path sum. 
+A path is a collection of connected nodes where no node is connected to more 
+than two other nodes; a path sum is the sum of the values of the nodes in a 
+particular path. Each Binary Tree node has a value stored in a property called
+"value" and two children nodes stored in properties called "left" and "right,"
+respectively. Children nodes can either be Binary Tree nodes themselves or the None (null) value.
+
+helper -> {maxBranchPath: num, maxPathSum: num}
+
+main(tree) 
+if(tree === null) return 0
+let result = helper(tree)
+return result.maxPathSum
+
+
+helper(node){
+  if(node === null){
+    return {maxBranchPath: 0, maxPathSum: 0}
+  }
+  
+  let leftResult = helper(node.left)
+  let rightResult = helper(node.right)
+  
+  let maxChildBranchPath = Math.max(leftResult.maxBranchPath, rightResult.maxBranchPath)
+  let maxBranchPath = Math.max(node.value, maxChildBranchPath + node.value)
+  let currTreeMaxPath = Math.max(maxBranchPath, leftResult.maxBranchPath + node.value + rightResult.maxBranchPath)
+  let maxPathSum = Math.max(currTreeMaxPath, leftResult.maxPathSum, rightResult.maxPathSum)
+  
+  return {maxBranchPath : maxBranchPath, maxPathSum : maxPathSum}
+}
+
+
+
+function maxPathSum(tree){
+  if(tree === null) return 0
+  let result = maxPathSumHelper(tree)
+  return result.maxPathSum
+}
+
+
+function maxPathSumHelper(node){
+  if(node === null){
+    return {maxBranchPath: 0, maxPathSum: 0}
+  }
+  
+  let leftResult = maxPathSumHelper(node.left)
+  let rightResult = maxPathSumHelper(node.right)
+  
+  let maxChildBranchPath = Math.max(leftResult.maxBranchPath, rightResult.maxBranchPath)
+  let maxBranchPath = Math.max(node.value, maxChildBranchPath + node.value)
+  let currTreeMaxPath = Math.max(maxBranchPath, leftResult.maxBranchPath + node.value + rightResult.maxBranchPath)
+  let maxPathSum = Math.max(currTreeMaxPath, leftResult.maxPathSum,rightResult.maxPathSum)
+  return {maxBranchPath: maxBranchPath, maxPathSum : maxPathSum}
+}
+
+
+
